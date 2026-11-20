@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muse Wonder — the Meta AI that beat Opus: charts, how to use and how to test</title>
+<meta name="description" content="Muse Wonder and Wonder Full (Meta, Oct 12, 2026) in comparison charts against Claude Opus 5.5, GPT-6 Astra and Gemini 4 Argon: where it wins, where it loses, price, how to use the API and Muse Code, and how to test it on your project.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/muse-wonder/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/muse-wonder/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/muse-wonder/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+  .chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 14px}
+  .chart h3{font-size:1rem;margin-bottom:.9em}
+  .bar{display:grid;grid-template-columns:minmax(0,11.5em) minmax(0,1fr) 3.4em;gap:10px;align-items:center;margin:7px 0;font-size:.88rem}
+  .bar span{color:var(--mut);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar i{display:block;height:16px;border-radius:0 8px 8px 0;background:linear-gradient(90deg,rgba(56,189,248,.45),rgba(56,189,248,.85));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .chart.in .bar i{width:var(--v)}
+  .bar b{font-family:Sora;font-weight:800;font-size:.95rem}
+  .bar.hl span,.bar.hl b{color:var(--amb)} .bar.hl i{background:linear-gradient(90deg,#c97f12,var(--amb));box-shadow:0 0 18px rgba(226,162,59,.35)}
+  .src{color:var(--mut);font-size:.78rem;margin:.9em 0 0}
+  @media(max-width:540px){.bar{grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 3em;font-size:.8rem}}
+  @media(prefers-reduced-motion:reduce){.bar i{transition:none;width:var(--v)}}
+  .tb{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:10px;display:block;overflow-x:auto}
+  .tb th,.tb td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;white-space:nowrap}
+  .tb th{color:var(--amb);font-family:Sora;font-size:.78rem;letter-spacing:.04em}
+  .warn{border-color:rgba(226,162,59,.45)} .warn ul{margin:.4em 0 0;padding-left:1.2em;color:var(--mut);font-size:.92rem} .warn li{margin:.35em 0}
+  .vids{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:start}
+  .vids figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .vids video{width:100%;display:block} .vids .v916 video{aspect-ratio:9/16;object-fit:cover}
+  .vids figcaption{padding:10px 14px;font-size:.86rem;color:var(--mut);background:var(--card)}
+  @media(max-width:760px){.vids{grid-template-columns:1fr}.vids .v916{max-width:360px;margin:0 auto}}
+  .fontes{color:var(--mut);font-size:.92rem;padding-left:1.2em} .fontes li{margin:.4em 0;overflow-wrap:anywhere}
+  @media(max-width:900px){nav .links a.sec{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🏁</span> Muse Wonder</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#graficos">Charts</a>
+    <a class="sec" href="#usar">How to use</a>
+    <a class="sec" href="#testar">How to test</a>
+    <a class="sec" href="#videos">Videos</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="https://github.com/inematds/muse-wonder" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Meta · Oct 12, 2026 · charts checked</span>
+      <h1>The Meta AI that beat <span class="amb">Opus</span> in the coding marathon</h1>
+      <p class="lead">Muse Wonder and Wonder Full in comparison charts: where they win, where they lose, how to use them and how to test them on your project.</p>
+      <div class="cta">
+        <a class="btn" href="#graficos">See the charts</a>
+        <a class="btn ghost" href="#videos">Watch the videos</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-en.jpg" alt="Banner: Meta beat Opus — Muse Wonder in charts"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">In short</span>
+  <p>On October 12, 2026, Meta released two artificial intelligence models, Muse Wonder and Muse Wonder Full, built to work on their own for a long time on programming and office tasks. This guide gathers the numbers we checked in official and independent sources, shows where they win and where they lose against Claude Opus 5.5 and GPT-6 Astra, and teaches you to use and test them yourself. It is for people who code with agents and want to decide with their own evidence, not with the chart of whoever is selling. To read it, you do not need to install anything.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">What was released</span>
+  <h2>Two models, one million tokens</h2>
+  <p class="sub">Both read 1,048,576 tokens of context, accept text, image, video, audio and PDF, and reply in text only.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="Banner with the guide topics: charts, where it loses, price, how to use, how to test and videos" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🧠 Muse Wonder</h3><p>It is on the Meta API (<code>muse-wonder-1.0</code>, in Preview), in Muse Code and on OpenRouter. It costs US$ 4 per million input tokens and US$ 20 output, the same as Opus 5.5.</p></div>
+    <div class="card"><h3>🚀 Muse Wonder Full</h3><p>The stronger version. It has no API: it only runs in Muse Code, Meta's terminal agent, on the Power (US$ 50/month) and Maximum (US$ 200/month) plans.</p></div>
+    <div class="card"><h3>🎯 What for</h3><p>Long, autonomous work: multi-file programming, agents, computer use, law and finance. The older Muse Spark was the fast, compact one.</p></div>
+  </div>
+</div></section>
+
+<section id="graficos"><div class="wrap">
+  <span class="chip">The charts</span>
+  <h2>Where it <span class="amb">wins</span></h2>
+  <p class="sub">Bars scaled from zero. In amber, the Meta model. Each chart lists its source; "Meta" means Meta's own official table (self-reported).</p>
+  <div class="grid g2">
+    <div class="chart">
+      <h3>SWE-Marathon · long programming task (%)</h3>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:95.8%"></i><b>57.5</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:88.5%"></i><b>53.1</b></div>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:77.2%"></i><b>46.3</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:76.0%"></i><b>45.6</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:70.8%"></i><b>42.5</b></div>
+      <p class="src">Source: Meta, dev.meta.ai/models/muse-wonder. Full was measured at <code>xhigh</code>, and each model ran in its own harness.</p>
+    </div>
+    <div class="chart">
+      <h3>DeepSWE 1.1 · 113 tasks across 91 repositories (%)</h3>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:98.8%"></i><b>79.0</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:98.5%"></i><b>78.8</b></div>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:92.8%"></i><b>74.2</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:92.6%"></i><b>74.1</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:84.2%"></i><b>67.4</b></div>
+      <p class="src">Source: Meta (third-party numbers: Datacurve, OpenAI and Anthropic).</p>
+    </div>
+    <div class="chart">
+      <h3>Intelligence Index · Artificial Analysis (points)</h3>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:96.7%"></i><b>58</b></div>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:93.3%"></i><b>56</b></div>
+      <div class="bar"><span>Sonnet 5.5</span><i style="--v:93.3%"></i><b>56</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:88.3%"></i><b>53</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:88.3%"></i><b>53</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:86.7%"></i><b>52</b></div>
+      <div class="bar"><span>Muse Spark 1.3</span><i style="--v:80.0%"></i><b>48</b></div>
+      <p class="src">Source: Artificial Analysis, Oct 12, 2026 (independent evaluation).</p>
+    </div>
+    <div class="chart">
+      <h3>Coding Agent Index · inside each one's own tool</h3>
+      <div class="bar hl"><span>Muse Code + Full</span><i style="--v:97.1%"></i><b>68</b></div>
+      <div class="bar"><span>Claude Code + Sonnet 5.5</span><i style="--v:97.1%"></i><b>68</b></div>
+      <div class="bar"><span>Claude Code + Opus 5.5</span><i style="--v:94.3%"></i><b>66</b></div>
+      <div class="bar"><span>Muse Code + Wonder</span><i style="--v:90.0%"></i><b>63</b></div>
+      <p class="src">Source: Artificial Analysis. Full ties with Claude Code + Sonnet; it beats Opus by 2 points.</p>
+    </div>
+    <div class="chart">
+      <h3>Personal Superintelligence Index (%) · Meta internal test</h3>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:98.5%"></i><b>59.1</b></div>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:92.0%"></i><b>55.2</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:90.8%"></i><b>54.5</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:90.5%"></i><b>54.3</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:83.2%"></i><b>49.9</b></div>
+      <p class="src">Source: Meta. Index created by Meta itself (7 personal and office tasks): read with caution.</p>
+    </div>
+    <div class="chart">
+      <h3>Finance · Vals Finance Agent v2 (%)</h3>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:98.5%"></i><b>59.1</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:98.2%"></i><b>58.9</b></div>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:97.7%"></i><b>58.6</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:94.3%"></i><b>56.6</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:89.2%"></i><b>53.5</b></div>
+      <p class="src">Source: Meta and Vals.ai. On Vals' overall index Full came in 5th, with 64.57%.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="perde"><div class="wrap">
+  <span class="chip">Where it loses</span>
+  <h2>It does not win <span class="amb">everything</span></h2>
+  <p class="sub">By Meta's own table and by Artificial Analysis, there are areas where Opus and Astra stay ahead.</p>
+  <div class="grid g2">
+    <div class="chart">
+      <h3>ProgramBench · build a program from scratch (%)</h3>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:88.1%"></i><b>70.5</b></div>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:73.8%"></i><b>59.0</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:69.4%"></i><b>55.5</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:65.6%"></i><b>52.5</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:62.5%"></i><b>50.0</b></div>
+      <p class="src">Source: Meta.</p>
+    </div>
+    <div class="chart">
+      <h3>Terminal-Bench 4.0 · terminal commands (%)</h3>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:99.3%"></i><b>59.6</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:98.5%"></i><b>59.1</b></div>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:95.2%"></i><b>57.1</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:86.7%"></i><b>52.0</b></div>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:86.7%"></i><b>52.0</b></div>
+      <p class="src">Source: Meta. Full rose from 33% (Spark 1.3) to 57%, but still trails.</p>
+    </div>
+    <div class="chart">
+      <h3>Knowledge · AA-Omniscience (points)</h3>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:92.0%"></i><b>46</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:86.0%"></i><b>43</b></div>
+      <div class="bar"><span>Gemini 4 Argon</span><i style="--v:84.0%"></i><b>42</b></div>
+      <div class="bar"><span>Sonnet 5.5</span><i style="--v:64.0%"></i><b>32</b></div>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:60.0%"></i><b>30</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:50.0%"></i><b>25</b></div>
+      <p class="src">Source: Artificial Analysis (6,000 questions).</p>
+    </div>
+    <div class="chart">
+      <h3>Makes up an answer when it does not know (%) · lower is better</h3>
+      <div class="bar"><span>Gemini 4 Argon</span><i style="--v:37.5%"></i><b>15</b></div>
+      <div class="bar hl"><span>Wonder Full</span><i style="--v:57.5%"></i><b>23</b></div>
+      <div class="bar"><span>Wonder</span><i style="--v:67.5%"></i><b>27</b></div>
+      <div class="bar"><span>Muse Spark 1.3</span><i style="--v:82.5%"></i><b>33</b></div>
+      <p class="src">Source: Artificial Analysis. The rate for Opus and Astra does not appear in the AA text (only in an image chart), so it was left out.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="preco"><div class="wrap">
+  <span class="chip">Price</span>
+  <h2>Same price as Opus per token, <span class="amb">cheaper</span> per task</h2>
+  <p class="sub">Wonder reads a lot: 7.69 million input tokens per task, which is 76% of the cost. That is why Astra, Argon and GPT-6.1 come out cheaper per task.</p>
+  <div class="grid g2">
+    <div class="chart">
+      <h3>Average cost per AA index task (US$)</h3>
+      <div class="bar"><span>Fable 5.1</span><i style="--v:95.4%"></i><b>7.63</b></div>
+      <div class="bar"><span>Opus 5.5</span><i style="--v:74.8%"></i><b>5.98</b></div>
+      <div class="bar"><span>Sonnet 5.5</span><i style="--v:68.2%"></i><b>5.46</b></div>
+      <div class="bar hl"><span>Wonder</span><i style="--v:56.5%"></i><b>4.52</b></div>
+      <div class="bar"><span>GPT-6 Astra</span><i style="--v:40.8%"></i><b>3.26</b></div>
+      <div class="bar"><span>Gemini 4 Argon</span><i style="--v:24.9%"></i><b>1.99</b></div>
+      <div class="bar"><span>Muse Spark 1.3</span><i style="--v:20.0%"></i><b>1.60</b></div>
+      <div class="bar"><span>GPT-6.1 Sol</span><i style="--v:9.0%"></i><b>0.72</b></div>
+      <p class="src">Source: Artificial Analysis. Full has no per-token price, so it is not included.</p>
+    </div>
+    <div class="card">
+      <h3>💵 Price per million tokens</h3>
+      <table class="tb">
+        <tr><th>Model</th><th>Input</th><th>Output</th></tr>
+        <tr><td><b>Muse Wonder</b></td><td>US$ 4</td><td>US$ 20</td></tr>
+        <tr><td>Claude Opus 5.5</td><td>US$ 4</td><td>US$ 20</td></tr>
+        <tr><td>GPT-6 Astra / Fable 5.1</td><td>US$ 10</td><td>US$ 50</td></tr>
+        <tr><td>Muse Spark 1.3</td><td>US$ 1.25</td><td>US$ 4.25</td></tr>
+      </table>
+      <p style="margin-top:12px">Wonder input cache: US$ 0.20. No surcharge for long context. Full: only through the Muse Code subscription (Power US$ 50, Maximum US$ 200 per month).</p>
+    </div>
+  </div>
+  <div class="card warn" style="margin-top:18px">
+    <h3>⚠️ Before believing the charts</h3>
+    <ul>
+      <li>The main table is Meta's own. The Personal Superintelligence Index, MemoryBench and FocusBench are <b>internal</b>: nobody outside can run them.</li>
+      <li>Competitors ran at Meta's "best effort", in configurations that Meta itself admits may not be ideal for them.</li>
+      <li>Meta has already run into trouble with benchmarks on Llama 4 (2025), when it showed on LMArena a different version from the one it released.</li>
+      <li>The same test changes number depending on the source: on Harvey (legal) Meta gives Full 13.1 and Vals gives 21.67%, with a different version of the test.</li>
+      <li>Safety: the model card says that, <b>without mitigation</b>, Meta cannot rule out <b>high</b> risk in chemistry and biology; with the filters, everything falls at "moderate or lower". The full safety report is not out yet.</li>
+      <li>Privacy: Muse Code subscriptions start in <b>Contributor mode</b> (your code may train future models). You can turn it off, but it does not undo what was already sent.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section id="usar"><div class="wrap">
+  <span class="chip">How to use</span>
+  <h2>Meta API, OpenRouter or <span class="amb">Muse Code</span></h2>
+  <p class="sub">Wonder runs through the API (pay per use) and in Muse Code. Full only in Muse Code, with a Power or Maximum subscription. Paying for the subscription does not give API access to Full.</p>
+  <div class="step"><div class="b">1</div><div>
+    <h3>Create the account and key on the Meta Model API</h3>
+    <p>Go to <a href="https://dev.meta.ai" target="_blank" rel="noopener">dev.meta.ai</a>, create the developer account and generate a key. Keep it in an environment variable, never in the code.</p>
+<pre><span class="k">export</span> MODEL_API_KEY=<span class="s">"your-key"</span>
+<span class="k">curl</span> -s https://api.meta.ai/v1/models -H <span class="s">"Authorization: Bearer $MODEL_API_KEY"</span>  <span class="c"># checks that muse-wonder-1.0 shows up</span></pre>
+  </div></div>
+  <div class="step"><div class="b">2</div><div>
+    <h3>Call Wonder with the OpenAI SDK</h3>
+    <p>The Chat Completions endpoint is compatible with the OpenAI format: change the <code>base_url</code> and the model name. For long tasks with tools, Meta recommends the Responses API (<code>POST /v1/responses</code>).</p>
+<pre><span class="k">import</span> os
+<span class="k">from</span> openai <span class="k">import</span> OpenAI
+
+client = OpenAI(base_url=<span class="s">"https://api.meta.ai/v1"</span>, api_key=os.environ[<span class="s">"MODEL_API_KEY"</span>])
+r = client.chat.completions.create(
+    model=<span class="s">"muse-wonder-1.0"</span>,
+    reasoning_effort=<span class="s">"high"</span>,   <span class="c"># ranges from "minimal" to "max"; "max" does NOT turn it into Full</span>
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Explain what this repository does."</span>}],
+)
+print(r.choices[0].message.content)</pre>
+  </div></div>
+  <div class="step"><div class="b">3</div><div>
+    <h3>Or use it through OpenRouter</h3>
+    <p>Wonder is on OpenRouter as <code>meta/muse-wonder</code>, at the same price (US$ 4 / US$ 20) and 1M of context. Full is not there.</p>
+<pre>client = OpenAI(base_url=<span class="s">"https://openrouter.ai/api/v1"</span>, api_key=os.environ[<span class="s">"OPENROUTER_API_KEY"</span>])
+client.chat.completions.create(model=<span class="s">"meta/muse-wonder"</span>, messages=[...])</pre>
+  </div></div>
+  <div class="step"><div class="b">4</div><div>
+    <h3>Install Muse Code (Meta's terminal agent)</h3>
+    <p>It is the path to Wonder Full. Run it in the project folder, trust the folder and log in through the browser or with the key. The plans are at <a href="https://dev.meta.ai/docs/muse-code/subscriptions" target="_blank" rel="noopener">dev.meta.ai/docs/muse-code/subscriptions</a>.</p>
+<pre><span class="k">curl</span> -fsSL https://dev.meta.ai/install.sh | sh        <span class="c"># Linux and macOS</span>
+<span class="k">irm</span> https://dev.meta.ai/install.ps1 | iex              <span class="c"># Windows (PowerShell)</span>
+<span class="k">muse</span> --version
+<span class="k">cd</span> my-project && <span class="k">muse</span>                            <span class="c"># pick the Wonder model in the session</span>
+<span class="k">muse</span> exec <span class="s">"run the tests and fix what fails"</span>   <span class="c"># headless (CI), with META_API_KEY</span></pre>
+  </div></div>
+</div></section>
+
+<section id="testar"><div class="wrap">
+  <span class="chip">How to test</span>
+  <h2>The test that counts is <span class="amb">on your code</span></h2>
+  <p class="sub">A benchmark is an average of other people's tasks. To decide, compare on your own codebase, under the same conditions. Define beforehand what you will compare: Wonder × Opus via API (same price) or Muse Code + Full × Claude Code + Opus (subscription × subscription).</p>
+  <div class="step"><div class="b">1</div><div>
+    <h3>Pick 3 to 5 real tasks, each with a test</h3>
+    <p>A bug with a failing test, a medium feature, a multi-file refactor and, if you can, a long task (hours). Without a test there is no way to say who got it right.</p>
+  </div></div>
+  <div class="step"><div class="b">2</div><div>
+    <h3>Freeze the starting point</h3>
+    <p>Same commit, a clean copy for each agent, the same request, and the verification tests out of its reach.</p>
+<pre><span class="k">git</span> worktree add ../teste-wonder <span class="s">&lt;commit&gt;</span>
+<span class="k">git</span> worktree add ../teste-opus   <span class="s">&lt;commit&gt;</span>
+<span class="c"># same request file in both; same rules (equivalent AGENTS.md / CLAUDE.md)</span></pre>
+  </div></div>
+  <div class="step"><div class="b">3</div><div>
+    <h3>Same conditions, 3 runs each</h3>
+    <p>Same reasoning level, same time limit, same tools and permissions. The result varies from one run to another; three runs give an honest average.</p>
+  </div></div>
+  <div class="step"><div class="b">4</div><div>
+    <h3>Measure three things (and note the rest)</h3>
+    <p>Wall-clock time, cost (input, cache and output tokens × price) and passing tests, including the whole suite to catch regressions. Also note how many times you had to step in.</p>
+    <table class="tb">
+      <tr><th>Task</th><th>Agent</th><th>Run</th><th>Time</th><th>Cost</th><th>Tests</th><th>Regression</th><th>Interventions</th></tr>
+      <tr><td>bug-login</td><td>Wonder</td><td>1</td><td>12 min</td><td>US$ 0.80</td><td>14/14</td><td>no</td><td>0</td></tr>
+      <tr><td>bug-login</td><td>Opus 5.5</td><td>1</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+    </table>
+    <p class="src">Example row, only to show the spreadsheet format.</p>
+  </div></div>
+  <div class="step"><div class="b">5</div><div>
+    <h3>Review the diff blind and decide</h3>
+    <p>Ask someone else (or a third model) to judge the quality without knowing who did it. Compare success rate, cost per solved task and time. Remember: Wonder is strong on long tasks and weak on pure knowledge.</p>
+  </div></div>
+  <div class="card" style="margin-top:8px">
+    <h3>🧪 Public benchmarks you can run</h3>
+    <p>Terminal-Bench (tasks in containers), SWE-bench Verified/Pro (local with Docker), ProgramBench (with mini-swe-agent) and OSWorld (computer use). Look up each one's official page for instructions. The Personal Superintelligence Index and MemoryBench are Meta-internal and cannot be run.</p>
+  </div>
+</div></section>
+
+<section id="videos"><div class="wrap">
+  <span class="chip">Videos</span>
+  <h2>Watch it in <span class="amb">2 minutes</span> or in 40 seconds</h2>
+  <p class="sub">The 16:9 explainer with all the animated charts and the 9:16 reel in the 7-step model.</p>
+  <div class="vids">
+    <figure><video controls preload="none" poster="../assets/poster-16x9.jpg" src="https://github.com/inematds/muse-wonder/releases/download/video-v1.0.0/muse-wonder-16x9.mp4"></video><figcaption>16:9 explainer · charts, where it loses, how to use and how to test · <a href="https://www.youtube.com/watch?v=orU-IRYyh5k" target="_blank" rel="noopener">Watch on YouTube</a></figcaption></figure>
+    <figure class="v916"><video controls preload="none" poster="../assets/poster-9x16.jpg" src="https://github.com/inematds/muse-wonder/releases/download/video-v1.0.0/muse-wonder-r7e-9x16.mp4"></video><figcaption>9:16 reel · 7 steps · <a href="https://www.youtube.com/shorts/FyEzfekpa10" target="_blank" rel="noopener">Watch on YouTube</a></figcaption></figure>
+  </div>
+</div></section>
+
+<section id="fontes"><div class="wrap">
+  <span class="chip">Sources</span>
+  <h2>Where the numbers come from</h2>
+  <p class="sub">Research done on Oct 14, 2026. When two sources disagree, the chart says which one was used.</p>
+  <ul class="fontes">
+    <li>Meta, model page with the table: <a href="https://dev.meta.ai/models/muse-wonder" target="_blank" rel="noopener">dev.meta.ai/models/muse-wonder</a></li>
+    <li>Meta, announcement: <a href="https://about.fb.com/news/2026/10/introducing-muse-wonder-models/" target="_blank" rel="noopener">about.fb.com</a> · technical blog: <a href="https://research.meta.ai/blog/muse-wonder" target="_blank" rel="noopener">research.meta.ai/blog/muse-wonder</a> · model card: <a href="https://research.meta.ai/static/muse-wonder-model-card" target="_blank" rel="noopener">research.meta.ai</a></li>
+    <li>Documentation: <a href="https://dev.meta.ai/docs/models" target="_blank" rel="noopener">models</a>, <a href="https://dev.meta.ai/docs/protocols/chat-completions" target="_blank" rel="noopener">Chat Completions</a>, <a href="https://dev.meta.ai/docs/muse-code" target="_blank" rel="noopener">Muse Code</a></li>
+    <li>Artificial Analysis: <a href="https://artificialanalysis.ai/articles/muse-wonder" target="_blank" rel="noopener">artificialanalysis.ai/articles/muse-wonder</a></li>
+    <li>Vals.ai: <a href="https://www.vals.ai/models/meta_muse-wonder-full" target="_blank" rel="noopener">vals.ai/models/meta_muse-wonder-full</a></li>
+    <li>OpenRouter: <a href="https://openrouter.ai/meta/muse-wonder" target="_blank" rel="noopener">openrouter.ai/meta/muse-wonder</a></li>
+  </ul>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Meta Muse</div><div class="pill">Benchmarks</div><div class="pill">Coding agents</div>
+    <p style="margin-top:18px">Muse Wonder · guide with charts, usage and testing ·
+      <a href="https://github.com/inematds/muse-wonder">inematds/muse-wonder</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='muse-wonder-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+    var io='IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.25}) : null;
+    document.querySelectorAll('.chart').forEach(function(c){ io ? io.observe(c) : c.classList.add('in'); });
+  })();
+</script>
+</body>
+</html>
