@@ -1,6 +1,6 @@
 # 🏁 Muse Wonder — la IA de Meta que superó a Opus
 
-[![Meta superó a Opus — Muse Wonder en gráficos](guia/assets/banner-es.jpg)](https://inematds.github.io/muse-wonder/guia/es/)
+[![Meta superó a Opus — Muse Wonder en gráficos](guia/assets/banner-es.jpg)](https://linnoff88-dev.github.io/arckhe-/guia/es/)
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
@@ -10,11 +10,11 @@ El 12 de octubre de 2026 Meta lanzó dos modelos de inteligencia artificial, Mus
 
 ## 📖 Guía
 
-Gráficos comparativos, dónde pierde, precio, cómo usar y cómo probar: **https://inematds.github.io/muse-wonder/guia/es/**
+Gráficos comparativos, dónde pierde, precio, cómo usar y cómo probar: **https://linnoff88-dev.github.io/arckhe-/guia/es/**
 
 ## 🎬 Videos
 
-- Explicativo 16:9 (2 min 15 s, [YouTube](https://www.youtube.com/watch?v=orU-IRYyh5k)) y reel 9:16 (40 s, [YouTube](https://www.youtube.com/shorts/FyEzfekpa10)), en portugués: en la [release video-v1.0.0](https://github.com/inematds/muse-wonder/releases/tag/video-v1.0.0) y en la guía.
+- Explicativo 16:9 (2 min 15 s, [YouTube](https://www.youtube.com/watch?v=orU-IRYyh5k)) y reel 9:16 (40 s, [YouTube](https://www.youtube.com/shorts/FyEzfekpa10)), en portugués: en la [release video-v1.0.0](https://github.com/linnoff88-dev/muse-wonder/releases/tag/video-v1.0.0) y en la guía.
 
 ## En números (fuentes en la guía)
 
@@ -25,4 +25,4 @@ Gráficos comparativos, dónde pierde, precio, cómo usar y cómo probar: **http
 | Índice Artificial Analysis | 56 | 52 | **58** | 53 |
 | Precio por 1M tokens (entrada/salida) | solo Muse Code | US$ 4 / 20 | US$ 4 / 20 | US$ 10 / 50 |
 
-Investigación del 14/10/2026 · [INEMA.CLUB](https://inema.club)
+Investigación del 14/10/2026 · [ARCKHÉ AI](https://ARCKHÉ AI)
